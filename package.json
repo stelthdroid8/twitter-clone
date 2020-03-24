@@ -1,0 +1,27 @@
+{
+  "name": "twitter-clone",
+  "version": "1.0.0",
+  "description": "This is a clone of the popular social media site, twitter, that will have basic functionalities.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stelthdroid8/twitter-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stelthdroid8/twitter-clone/issues"
+  },
+  "homepage": "https://github.com/stelthdroid8/twitter-clone#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
