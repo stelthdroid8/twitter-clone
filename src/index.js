@@ -1,10 +1,15 @@
 const express = require('express');
+
+const userRoutes = require('./routes/users');
+// require('dotenv').config();
+
 const app = express();
+// const port = process.env.PORT;
 
-require('dotenv').config();
+app.use(express.json());
 
-const port = process.env.PORT;
+app.use(userRoutes);
 
-app.listen(port, () => {
-  console.log(`server is up on: ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log('server is up and running');
 });
