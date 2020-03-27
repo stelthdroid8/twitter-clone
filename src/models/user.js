@@ -1,38 +1,53 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 require('dotenv').config();
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    lowercase: true
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 6
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('Email is  invalid');
+        }
       }
-    }
-  ]
-});
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: [6, 'Password not long enough ']
+    },
+    bio: {
+      type: String,
+      maxlength: [40, 'Bio too long']
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true
+        }
+      }
+    ]
+  },
+  {
+    timestamps: true
+  }
+);
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
