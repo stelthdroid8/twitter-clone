@@ -1,5 +1,6 @@
 const express = require('express');
 
+const authMiddleware = require('../middleware/auth');
 const User = require('../models/user');
 
 require('../db/mongoose');
