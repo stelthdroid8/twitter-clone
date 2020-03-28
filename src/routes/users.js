@@ -22,6 +22,7 @@ router.post('/users/signup', async (req, res) => {
     res.status(400).send(error);
   }
 });
+
 router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(
@@ -32,6 +33,19 @@ router.post('/users/login', async (req, res) => {
     res.send({ user, token });
   } catch (error) {
     res.status(400).send(error);
+  }
+});
+
+router.post('/users/logout', authMiddleware, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter(token => {
+      return token.token !== req.token;
+    });
+    await req.user.save();
+
+    res.status(200).send();
+  } catch (error) {
+    res.status(500).send();
   }
 });
 
