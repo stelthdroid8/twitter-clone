@@ -35,7 +35,7 @@ router.post('/users/login', async (req, res) => {
   }
 });
 
-router.get('/users/me', async (req, res) => {
+router.get('/users/me', authMiddleware, async (req, res) => {
   res.send(req.user);
 });
 
