@@ -53,4 +53,29 @@ router.get('/users/me', authMiddleware, async (req, res) => {
   res.send(req.user);
 });
 
+router.patch('/users/me', authMiddleware, async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['bio', 'email', 'password'];
+
+  const isValidUpdate = updates.every(update =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!isValidUpdate) {
+    return res.status(400).send({ error: 'Invalid updates' });
+  }
+
+  try {
+    // console.log(req.user);
+    // console.log(req.body);
+
+    updates.forEach(update => (req.user[update] = req.body[update]));
+    await req.user.save();
+
+    res.send(req.user);
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
 module.exports = router;
